@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | Game</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="icon" type="image/x-icon" href="/node_modules/bootstrap-icons/icons/question-circle.svg">
+</head>
+
+<body onload="start()" style="margin: 1rem">
+    <script src="/JS/script.js"></script>
+
+    <div id="result-message" class="alert alert-primary" hidden="true" role="alert">
+      Quiz Done!
+    </div>
+
+    <div id="correct-answer-message" class="alert alert-success" hidden="true" role="alert">
+      Good Job! Correct Answer!
+    </div>
+
+    <div id="wrong-answer-message" class="alert alert-danger" hidden="true" role="alert">
+      Sorry! Wrong Answer!
+    </div>
+
+     <div class="progress">
+        <div id="progress-Bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="10" aria-valuemax="100" style="width: 10%"></div>
+      </div>
+
+     <div class="card text-center">
+        <div class="card-body">
+          <h5 id="question-title" class="card-title">Question</h5>
+          <p id="question-text" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <input id="answer-input" style="margin-bottom: 1rem; margin-top: 1rem;" class="form-control" type="text" placeholder="Answer">
+          <button id="submit-button" onclick="check()" type="submit" class="btn btn-outline-primary mb-2">Submit</button>
+        </ul>
+        <div class="card-body">
+            <a href="index.html" class="btn btn-secondary">Return to Home</a>
+            <button onclick="previous()" id="previous-button" class="btn btn-secondary">Previous</button>
+            <button onclick="next()" id="next-button" class="btn btn-secondary">Next</button>
+        </div>
+      </div>
+</body>
+
+</html>
