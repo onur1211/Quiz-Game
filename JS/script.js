@@ -1,5 +1,4 @@
 
-
 const questions = [["What does JS stand for?"], ["What is Bootstrap?"], ["What does CSS stand for?"], ["What does HTML stand for?"], ["In which year was JavaScript invented?"],
 ["Who invented JavaScript?"], ["What is JSON?"], ["What is important in Webdesign?"], ["What does DOM stand for?"], ["How many sites (in %) are using JavaScript?"],
 ["Is JavaScript Case Sensitive (Yes/No)?"], ["What is TypeScript?"], ["Which company invented TypeScript?"], ["Which Framework (starting with A) is based on TypeScript?"], ["Which company invented Bootstrap?"],
@@ -13,8 +12,8 @@ const answers = [["JavaScript"], ["Frontend Framework"], ["Cascading Style Sheet
 
 var questionNumber;
 var progressBarValue;
-var correct;
-var wrong;
+var correctAnswerCount;
+var wrongAnswerCount;
 var questionTitle;
 var questionText;
 var progressBar;
@@ -26,6 +25,7 @@ var resultMessage;
 var correctAnswerMessage;
 var wrongAnswerMessage;
 
+// Used for starting the quiz.
 function start() {
 
     initialize();
@@ -40,12 +40,13 @@ function start() {
     questionText.innerText = questions[questionNumber];
 }
 
+// Used for initializing.
 function initialize() {
 
-    questionNumber = Math.floor(Math.random() * 20);
-    progressBarValue = 10;
-    correct = 0;
-    wrong = 0;
+    questionNumber = randomNumber(20);
+    progressBarValue = 0;
+    correctAnswerCount = 0;
+    wrongAnswerCount = 0;
 
     questionTitle = document.getElementById("question-title");
     questionText = document.getElementById("question-text");
@@ -59,9 +60,10 @@ function initialize() {
     wrongAnswerMessage = document.getElementById("wrong-answer-message");
 }
 
+// Used for going to the next question.
 function next() {
 
-    questionNumber = Math.floor(Math.random() * 20);
+    questionNumber = randomNumber(20);
     progressBarValue = progressBarValue + 10;
     answerInput.value = null;
     progressBar.style.width = progressBarValue + "%";
@@ -85,9 +87,10 @@ function next() {
     save();
 }
 
+// Used for going to the previous question.
 function previous() {
 
-    questionNumber = Math.floor(Math.random() * 20);
+    questionNumber = randomNumber(20);
     progressBarValue = progressBarValue - 10;
     answerInput.value = null;
     progressBar.style.width = progressBarValue + "%";
@@ -105,17 +108,18 @@ function previous() {
     save();
 }
 
+// Used for checking the answer.
 function check() {
 
    if (answerInput.value == answers[questionNumber])
    {
-       correct = correct + 1;
+       correctAnswerCount = correctAnswerCount + 1;
        correctAnswerMessage.hidden = false;
        wrongAnswerMessage.hidden = true;
    }
    else
    {
-       wrong = wrong + 1;
+       wrongAnswerCount = wrongAnswerCount + 1;
        correctAnswerMessage.hidden = true;
        wrongAnswerMessage.hidden = false;
    }
@@ -123,9 +127,14 @@ function check() {
    save();
 }
 
+function randomNumber(value) {
+    return Math.floor(Math.random() * value);
+}
+
+// Used for showing the results.
 function showResult() {
     resultMessage.hidden = false;
-    resultMessage.innerText = resultMessage.innerText + " " + "Correct Answers: " + correct + " Wrong Answers: " + wrong;
+    resultMessage.innerText = resultMessage.innerText + " " + "Correct Answers: " + correctAnswerCount + " Wrong Answers: " + wrongAnswerCount;
     previousButton.hidden = true;
     nextButton.hidden = true;
     questionTitle.innerText = "Return to home and restart the game!";
@@ -135,22 +144,24 @@ function showResult() {
     progressBar.hidden = true;
 }
 
+// Used for saving the current progress.
 function save() {
 
     var file = {
         questionNumber: questionNumber,
         progressBarValue: progressBarValue,
-        correct: correct,
-        wrong: wrong
+        correctAnswerCount: correctAnswerCount,
+        wrongAnswerCount: wrongAnswerCount
     };
 
     localStorage.setItem("file", JSON.stringify(file));
 }
 
+// Used for loading the progress.
 function load() {
     var file = JSON.parse(localStorage.getItem("file"));
     questionNumber = file.questionNumber;
     progressBarValue = file.progressBarValue;
-    correct = file.correct;
-    wrong = file.wrong;
+    correctAnswerCount = file.correctAnswerCount;
+    wrongAnswerCount = file.wrongAnswerCount;
 }
